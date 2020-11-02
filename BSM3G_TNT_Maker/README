@@ -4,96 +4,48 @@ Code developed by: Andres Florez (Los Andes), Alfredo Gurrola (Vanderbilt) and A
 
 ###################################################
 
-The recipe is to install the code at LPC/ACCRE. 
-Therefore, to install the code elsewere, you'd need 
+The recipe is to install the code at LPC/ACCRE.
+Therefore, to install the code elsewere, you'd need
 to make the necessary changes.
 
 In order to use the code you need to follow carefully these steps:
 
+
 #####################################################################
-#                         CMSSW_7_4_4 Recipe                        #
+#                         CMSSW_11_1_2_patch3 Recipe                       #
 #####################################################################
 
-1. You need to work at the SLC6 area.
+1. You need to work at the SLC7 area.
 
-2. set the CMSSW release: cmsrel CMSSW_7_4_4
+   export SCRAM_ARCH=slc7_amd64_gcc820
+   source /cvmfs/cms.cern.ch/cmsset_default.csh
 
-3. cd CMSSW_7_4_4/src
+2. set the CMSSW release: cmsrel CMSSW_11_1_2_patch3
+
+3. cd CMSSW_11_1_2_patch3/src
 
 4. cmsenv
 
-5. Install and compile the code to use the PAT-electron ID:
+5. Install and compile the code to use the MET producers (for covariance matrix):
 
-  5.1 git cms-merge-topic ikrav:egm_id_74X_v0 
-  5.2 scram b -j 10
+  git cms-init
+  git cms-addpkg RecoMET/METProducers
+  scram b -j 10
 
-6. Get the NTupleMaker code and compile it:
-  
-  6.1 git clone https://github.com/florez/NtupleMaker_740
-  6.2 mv NtupleMaker_740 NtupleMaker
-  6.3 scram b -j 10
+6. Install and compile the code to use all the HLTrigger and DataFormats  producers
 
-7. In the python directory, there is file called miniAOD.py.  
-   7.1 You can run it with CMSSW (make sure it runs in a valid Spring15 miniOAD)
-
-
-#####################################################################
-#                         CMSSW_7_4_7 Recipe                        #
-#####################################################################
-
-1. You need to work at the SLC6 area.
-
-2. set the CMSSW release: cmsrel CMSSW_7_4_7
-
-3. cd CMSSW_7_4_7/src
-
-4. cmsenv
-
-5. Install and compile the code to use the PAT-electron ID:
-
-  5.1 git cms-merge-topic ikrav:egm_id_747_v2
-  5.2 scram b -j 10
-
-6. Get the NTupleMaker code and compile it:
-
-  6.1 git clone https://github.com/florez/NtupleMaker_740
-  6.2 mv NtupleMaker_740 NtupleMaker
-  6.3 scram b -j 10
-
-7. In the python directory, there is file called miniAOD_747.py.
-   7.1 You can run it with CMSSW (make sure it runs in a valid Spring15 miniOAD)
-
-
-#####################################################################
-#                         CMSSW_7_4_15 Recipe                        #
-#####################################################################
-
-1. You need to work at the SLC6 area.
-
-2. set the CMSSW release: cmsrel CMSSW_7_4_15
-
-3. cd CMSSW_7_4_15/src
-
-4. cmsenv
-
-5. Install and compile the code to use the PAT-electron ID:
-
-  5.1 git cms-merge-topic ikrav:egm_id_7.4.12_v1
-  5.2 scram b -j 10
-  
-6. Install and compile the code to use the MET producers (for covariance matrix):
-
-  6.1 git cms-addpkg RecoMET/METProducers
-  6.2 scram b -j 10
+  git cms-addpkg HLTrigger
+  scram b -j 10
+  git cms-addpkg DataFormats
+  scram b -j 10
 
 7. Get the NTupleMaker code and compile it:
 
-  7.1 git clone https://github.com/florez/NtupleMaker_740
-  7.2 cd NtupleMaker_740
-  7.3 git checkout miniAODv2_ForHiggsDalitz
-  7.4 cd ./..
-  7.5 mv NtupleMaker_740 NtupleMaker
-  7.6 scram b -j 10
+  git clone https://github.com/bfabelae/NtupleMaker_740 NtupleMaker
+  scram b -j 10
 
-8. In the python directory, there is file called miniAODv2_7415_25ns_*.py (name specifies which file is appropriate)
-   8.1 You can run it with CMSSW (make sure it runs on a valid miniOADv2): cmsRun miniAODv2_7415_25ns_MC.py
+8. Checkout the branch dedicated to the UPSG HLT TDR analysis
+  git checkout hlt_tdr_2020
+
+8. In the python directory, there is file called miniAODv2_8025_*.py (name specifies which file is appropriate)
+   8.1 You can run it with CMSSW (make sure it runs on a valid miniOADv2): cmsRun miniAODv2_8025_MC.py
