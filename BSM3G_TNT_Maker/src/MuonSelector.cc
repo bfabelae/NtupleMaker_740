@@ -69,8 +69,8 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 //  edm::ESHandle<GlobalTrackingGeometry> theTrackingGeometry;
 //  iSetup.get<GlobalTrackingGeometryRecord>().get(theTrackingGeometry);
 
-  edm::ESHandle<TransientTrackBuilder> theB;
-  iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
+  // edm::ESHandle<TransientTrackBuilder> theB;
+  // iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
 
   if(debug_) std::cout << "     MuonSelector: Looping over muons." << std::endl;
 
@@ -109,6 +109,7 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     Muon_trackRe_iso.push_back(mu->isolationR03().sumPt/mu->pt());
 
     // store additional information such as lifetime variables (needed for tau analyses)
+    /*
     if (!_super_TNT){
       Muon_chi2.push_back(gtk->normalizedChi2());
       Muon_validHits.push_back(gtk->hitPattern().numberOfValidMuonHits());
@@ -167,7 +168,7 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       Muon_trackFitErrorMatrix_12.push_back(muonParticle->stateAtPoint(mu_pca_bs).kinematicParametersError().matrix()(1,2));
       Muon_trackFitErrorMatrix_22.push_back(muonParticle->stateAtPoint(mu_pca_bs).kinematicParametersError().matrix()(2,2));
     }
-
+    */
     mucoun++;
   }
 
@@ -192,7 +193,7 @@ void MuonSelector::SetBranches(){
   AddBranch(&Muon_isoCharParPt      ,"Muon_isoCharParPt");
   AddBranch(&Muon_isTrackerMuon    ,"Muon_isTrackerMuon");
   AddBranch(&Muon_POGisGood        ,"Muon_POGisGood");
-
+  /*
   if (!_super_TNT){
     AddBranch(&Muon_chi2              ,"Muon_chi2");
     AddBranch(&Muon_validHits         ,"Muon_validHits");
@@ -241,6 +242,7 @@ void MuonSelector::SetBranches(){
     AddBranch(&Muon_trackFitErrorMatrix_12     ,"Muon_trackFitErrorMatrix_12");
     AddBranch(&Muon_trackFitErrorMatrix_22     ,"Muon_trackFitErrorMatrix_22");
   }
+  */
 
   if(debug_) std::cout << "     MuonSelector: Finished setting branches." << std::endl;
 }
@@ -266,6 +268,7 @@ void MuonSelector::Clear(){
   Muon_combinedIso.clear();
   Muon_trackRe_iso.clear();
   Muon_charge.clear();
+  /*
   Muon_chi2.clear();
   Muon_validHits.clear();
   Muon_validHitsInner.clear();
@@ -309,6 +312,7 @@ void MuonSelector::Clear(){
   Muon_trackFitErrorMatrix_11.clear();
   Muon_trackFitErrorMatrix_12.clear();
   Muon_trackFitErrorMatrix_22.clear();
+  */
 }
 
 bool MuonSelector::isGoodVertex(const reco::Vertex& vtx) {

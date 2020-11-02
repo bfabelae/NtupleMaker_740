@@ -69,8 +69,8 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   GlobalPoint thebs(beamSpot.x0(),beamSpot.y0(),beamSpot.z0());
 
   // get magnetic field and detector geometry information --> used to build transient tracks
-  edm::ESHandle<TransientTrackBuilder> theB;
-  iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
+  // edm::ESHandle<TransientTrackBuilder> theB;
+  // iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
 
   if(debug_) std::cout << "     TauSelector: Looping over taus." << std::endl;
 
@@ -92,6 +92,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     if(debug_) std::cout << "          Tau info: Tau #" << nTau << " --> Tau lead charged hadron: pt = " << hadTauLeadChargedCand->pt() << ", eta = " << hadTauLeadChargedCand->eta() << ", phi = " << hadTauLeadChargedCand->phi() << std::endl;
 
     // loop over packed PF candidates and find the one which matches the embedded packed candidate within the pat::Tau
+    /*
     const reco::Track *leadTrack = 0;
     bool isBestTrackNonNull = false;
     bool leadPackedCandidateExists = false;
@@ -109,6 +110,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     if(!(isBestTrackNonNull)) continue; // throw away the tau if it's lead charged hadron has no associated CTF track
     if(debug_) std::cout << "               Track Candidate info: Track Candidate pt = " << leadTrack->pt() << ", eta = " << leadTrack->eta() << ", phi = " << leadTrack->phi() << std::endl;
     if(debug_) std::cout << "          Tau info: Tau #" << nTau << " passed lead track IsNonNull cut" << std::endl;
+    */
 
     // fill root tree with "necessary" information:  kinematics, ID, isolation
     Tau_eta.push_back(tau->eta());
@@ -181,6 +183,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     Tau_againstElectronMVATightMVA6.push_back(tau->tauID("againstElectronTightMVA6"));
 
     // store additional information such as lifetime variables
+    /*
     if(!_super_TNT){
 
       Tau_leadChargedCandPt.push_back(hadTauLeadChargedCand.isNonnull() ? hadTauLeadChargedCand->pt() : -1.);
@@ -238,7 +241,6 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
       Tau_leadChargedCandTrackFitErrorMatrix_11.push_back(tauParticle->stateAtPoint(tauLeadTrack_pca_bs).kinematicParametersError().matrix()(1,1));
       Tau_leadChargedCandTrackFitErrorMatrix_12.push_back(tauParticle->stateAtPoint(tauLeadTrack_pca_bs).kinematicParametersError().matrix()(1,2));
       Tau_leadChargedCandTrackFitErrorMatrix_22.push_back(tauParticle->stateAtPoint(tauLeadTrack_pca_bs).kinematicParametersError().matrix()(2,2));
-
       Tau_signal_cand_chargedHadr_pt.push_back(vector< float >());
       Tau_signal_cand_chargedHadr_eta.push_back(vector< float >());
       Tau_signal_cand_chargedHadr_phi.push_back(vector< float >());
@@ -272,6 +274,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
         Tau_signal_cand_neutGam_energy.back().push_back(    tau->signalGammaCands()[i]->energy());
       }
     }
+    */
     taucoun++;
   }
 
@@ -333,6 +336,7 @@ void TauSelector::SetBranches(){
   AddBranch(&Tau_againstElectronMVALooseMVA6,                   "Tau_againstElectronMVALooseMVA6");
   AddBranch(&Tau_againstElectronMVAMediumMVA6,                  "Tau_againstElectronMVAMediumMVA6");
   AddBranch(&Tau_againstElectronMVATightMVA6,                   "Tau_againstElectronMVATightMVA6");
+  /*
   if(!_super_TNT){
     AddBranch(&Tau_leadChargedCandPt,                           "Tau_leadChargedCandPt");
     AddBranch(&Tau_leadChargedCandEta,                          "Tau_leadChargedCandEta");
@@ -382,8 +386,8 @@ void TauSelector::SetBranches(){
     AddBranch(&Tau_signal_cand_neutHadr_eta,    "Tau_signal_cand_neutHadr_eta");
     AddBranch(&Tau_signal_cand_neutHadr_phi,    "Tau_signal_cand_neutHadr_phi");
     AddBranch(&Tau_signal_cand_neutHadr_energy, "Tau_signal_cand_neutHadr_energy");
-
   }
+  */
 
   if(debug_) std::cout << "     TauSelector: Finished setting branches." << std::endl;
 }
@@ -441,6 +445,7 @@ void TauSelector::Clear(){
   Tau_againstElectronMVALooseMVA6.clear();
   Tau_againstElectronMVAMediumMVA6.clear();
   Tau_againstElectronMVATightMVA6.clear();
+  /*
   Tau_leadChargedCandPt.clear();
   Tau_leadChargedCandCharge.clear();
   Tau_leadChargedCandEta.clear();
@@ -489,6 +494,7 @@ void TauSelector::Clear(){
   Tau_signal_cand_neutHadr_eta.clear();
   Tau_signal_cand_neutHadr_phi.clear();
   Tau_signal_cand_neutHadr_energy.clear();
+  */
 }
 
 bool TauSelector::isGoodVertex(const reco::Vertex& vtxxx) {

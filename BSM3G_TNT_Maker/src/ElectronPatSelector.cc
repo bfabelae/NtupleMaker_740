@@ -91,8 +91,8 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
   iEvent.getByToken(electronMVAwp1Token_, mva_wp1_id_decisions);
   iEvent.getByToken(electronMVAwp2Token_, mva_wp2_id_decisions);
 
-  edm::ESHandle<TransientTrackBuilder> theB;
-  iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
+  // edm::ESHandle<TransientTrackBuilder> theB;
+  // iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
 
   if(debug_) std::cout << "     ElectronPatSelector: Looping over electrons." << std::endl;
 
@@ -148,6 +148,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     expectedMissingInnerHits.push_back(el->gsfTrack()->hitPattern().numberOfAllHits(reco::HitPattern::MISSING_INNER_HITS) );
 
     // store additional information such as lifetime variables (needed for tau analyses)
+    /*
     if (!_super_TNT){
 
       // Variables for life-time (impact parameter) studies  
@@ -163,17 +164,17 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
       patElectron_dxyError.push_back(el->gsfTrack()->d0Error());
     
       // point of closest approach (PCA) to the beamspot and primary vertex
-      TransientTrack elecTransTkPtr = theB->build(*(el->closestCtfTrackRef()));
+      // TransientTrack elecTransTkPtr = theB->build(*(el->closestCtfTrackRef()));
 //      TransientTrack elecTransTkPtr = theB->build(*(el->gsfTrack()));
-      GlobalPoint patElectron_pca_bs = elecTransTkPtr.trajectoryStateClosestToPoint(thebs).position();
+      // GlobalPoint patElectron_pca_bs = elecTransTkPtr.trajectoryStateClosestToPoint(thebs).position();
 //      GlobalPoint patElectron_pca_bs(el->TrackPositionAtVtx().X(), el->TrackPositionAtVtx().Y(),el->TrackPositionAtVtx().Z());
-      GlobalPoint patElectron_pca_pv = elecTransTkPtr.trajectoryStateClosestToPoint(thepv).position();
-      patElectron_gsfTrack_PCAx_bs.push_back(patElectron_pca_bs.x());
-      patElectron_gsfTrack_PCAy_bs.push_back(patElectron_pca_bs.y());
-      patElectron_gsfTrack_PCAz_bs.push_back(patElectron_pca_bs.z());
-      patElectron_gsfTrack_PCAx_pv.push_back(patElectron_pca_pv.x());
-      patElectron_gsfTrack_PCAy_pv.push_back(patElectron_pca_pv.y());
-      patElectron_gsfTrack_PCAz_pv.push_back(patElectron_pca_pv.z());
+      // GlobalPoint patElectron_pca_pv = elecTransTkPtr.trajectoryStateClosestToPoint(thepv).position();
+      // patElectron_gsfTrack_PCAx_bs.push_back(patElectron_pca_bs.x());
+      // patElectron_gsfTrack_PCAy_bs.push_back(patElectron_pca_bs.y());
+      // patElectron_gsfTrack_PCAz_bs.push_back(patElectron_pca_bs.z());
+      // patElectron_gsfTrack_PCAx_pv.push_back(patElectron_pca_pv.x());
+      // patElectron_gsfTrack_PCAy_pv.push_back(patElectron_pca_pv.y());
+      // patElectron_gsfTrack_PCAz_pv.push_back(patElectron_pca_pv.z());
 
       // extract track fit errors
       const float elecMass = 0.000510998928;
@@ -190,7 +191,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
       patElectron_gsfTrackFitErrorMatrix_22.push_back(elecParticle->stateAtPoint(patElectron_pca_bs).kinematicParametersError().matrix()(2,2));
 
     }
-
+    */
     elcoun++;
   }
   
@@ -217,7 +218,7 @@ void ElectronPatSelector::SetBranches(){
   AddBranch(&isoPU_                        ,"patElectron_isoPU");
   AddBranch(&expectedMissingInnerHits      ,"patElectron_expectedMissingInnerHits");
   AddBranch(&passConversionVeto_           ,"patElectron_passConversionVeto"); 
-
+  /*
   if (!_super_TNT){
     AddBranch(&patElectron_gsfTrack_dxy_pv   ,"patElectron_gsfTrack_dxy_pv");
     AddBranch(&patElectron_gsfTrack_dxy_bs   ,"patElectron_gsfTrack_dxy_bs");
@@ -229,12 +230,12 @@ void ElectronPatSelector::SetBranches(){
     AddBranch(&patElectron_gsfTrack_vtx      ,"patElectron_gsfTrack_vtx");
     AddBranch(&patElectron_gsfTrack_vty      ,"patElectron_gsfTrack_vty");
     AddBranch(&patElectron_gsfTrack_vtz      ,"patElectron_gsfTrack_vtz");
-    AddBranch(&patElectron_gsfTrack_PCAx_bs  ,"patElectron_gsfTrack_PCAx_bs");
-    AddBranch(&patElectron_gsfTrack_PCAy_bs  ,"patElectron_gsfTrack_PCAy_bs");
-    AddBranch(&patElectron_gsfTrack_PCAz_bs  ,"patElectron_gsfTrack_PCAz_bs");
-    AddBranch(&patElectron_gsfTrack_PCAx_pv  ,"patElectron_gsfTrack_PCAx_pv");
-    AddBranch(&patElectron_gsfTrack_PCAy_pv  ,"patElectron_gsfTrack_PCAy_pv");
-    AddBranch(&patElectron_gsfTrack_PCAz_pv  ,"patElectron_gsfTrack_PCAz_pv");
+    // AddBranch(&patElectron_gsfTrack_PCAx_bs  ,"patElectron_gsfTrack_PCAx_bs");
+    // AddBranch(&patElectron_gsfTrack_PCAy_bs  ,"patElectron_gsfTrack_PCAy_bs");
+    // AddBranch(&patElectron_gsfTrack_PCAz_bs  ,"patElectron_gsfTrack_PCAz_bs");
+    // AddBranch(&patElectron_gsfTrack_PCAx_pv  ,"patElectron_gsfTrack_PCAx_pv");
+    // AddBranch(&patElectron_gsfTrack_PCAy_pv  ,"patElectron_gsfTrack_PCAy_pv");
+    // AddBranch(&patElectron_gsfTrack_PCAz_pv  ,"patElectron_gsfTrack_PCAz_pv");
     AddBranch(&patElectron_gsfTrackFitErrorMatrix_00     ,"patElectron_gsfTrackFitErrorMatrix_00");
     AddBranch(&patElectron_gsfTrackFitErrorMatrix_01     ,"patElectron_gsfTrackFitErrorMatrix_01");
     AddBranch(&patElectron_gsfTrackFitErrorMatrix_02     ,"patElectron_gsfTrackFitErrorMatrix_02");
@@ -242,7 +243,7 @@ void ElectronPatSelector::SetBranches(){
     AddBranch(&patElectron_gsfTrackFitErrorMatrix_12     ,"patElectron_gsfTrackFitErrorMatrix_12");
     AddBranch(&patElectron_gsfTrackFitErrorMatrix_22     ,"patElectron_gsfTrackFitErrorMatrix_22");
   }
-
+  */
   if(debug_) std::cout << "     ElectronPatSelector: Finished setting branches." << std::endl;
 }
 
@@ -260,6 +261,7 @@ void ElectronPatSelector::Clear(){
   passHEEPId_.clear();
   passMVAwp1Id_.clear();
   passMVAwp2Id_.clear();
+  /*
   patElectron_gsfTrack_dxy_pv.clear();
   patElectron_gsfTrack_dxy_bs.clear();
   patElectron_dxyError.clear();
@@ -270,12 +272,14 @@ void ElectronPatSelector::Clear(){
   patElectron_gsfTrack_vtx.clear(); 
   patElectron_gsfTrack_vty.clear();
   patElectron_gsfTrack_vtz.clear();
+  */
   expectedMissingInnerHits.clear();
   passConversionVeto_.clear();
   isoChargedHadrons_.clear();
   isoNeutralHadrons_.clear();
   isoPhotons_.clear();
   isoPU_.clear();
+  /*
   patElectron_gsfTrack_PCAx_bs.clear();
   patElectron_gsfTrack_PCAy_bs.clear();
   patElectron_gsfTrack_PCAz_bs.clear();
@@ -288,7 +292,7 @@ void ElectronPatSelector::Clear(){
   patElectron_gsfTrackFitErrorMatrix_11.clear();
   patElectron_gsfTrackFitErrorMatrix_12.clear();
   patElectron_gsfTrackFitErrorMatrix_22.clear();
-
+  */
 }
 
 bool ElectronPatSelector::isGoodVertex(const reco::Vertex& vtxx) {
